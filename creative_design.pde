@@ -1,19 +1,26 @@
 import hypermedia.net.*;
 
+Pointer pointer = new Pointer();
+
+float FREQUENCY = 60;
 
 UDP udp;  // define the UDP object
 
 void setup() {
-
-  // create a new datagram connection on port 6000
-  // and wait for incomming message
+  size(600, 600);
   udp = new UDP( this, 6000 );
   //udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
 }
 
 //process events
-void draw() {;}
+void draw() {
+  background(0);
+  pushMatrix();
+  translate(300, 300);
+  pointer.draw();
+  popMatrix();
+}
 
 
 
@@ -28,8 +35,7 @@ void receive( byte[] data, String ip, int port ) {
   float g_y = get4bytesFloat(data, 20);
   float g_z = get4bytesFloat(data, 24);
   
-  // print the result
-  println( "acceleration: "+a_x+", "+a_y+", "+a_z+" gyroscope: "+g_x+", "+g_y+", "+g_z+" from "+ip+" on port "+port );
+  pointer.change(g_x, g_y, g_z, a_x, a_y, a_z);
 }
 
 float get4bytesFloat(byte[] data, int offset) { 
