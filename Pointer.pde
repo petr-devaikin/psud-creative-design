@@ -25,16 +25,19 @@ class Pointer {
       
     track.add(new Point(currentX, currentY, currentColor));
     
-    //beginShape();
-    for (int i = 1; i < track.size(); i++) {
-      Point p1 = track.get(i-1);
-      Point p2 = track.get(i);
-      stroke(p2.c, 255.0 * i / track.size());
+    beginShape();
+    for (int i = 0; i < track.size(); i++) {
+      Point p1 = track.get(i);
+      stroke(p1.c, 255.0 * i / track.size());
       strokeWeight(10.0 * i / track.size());
-      line(p1.x, p1.y, p2.x, p2.y);
-      //vertex(p1.x, p1.y);
+      //line(p1.x, p1.y, p2.x, p2.y);
+      vertex(p1.x, p1.y);
     }
-    //endShape();
+    if (track.size() > 0) {
+      Point p1 = track.get(0);
+      vertex(p1.x, p1.y);
+    }
+    endShape();
   }
   
   void magnite() {
