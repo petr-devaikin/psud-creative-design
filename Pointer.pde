@@ -1,4 +1,5 @@
 int TRACK_LENGTH = 100; // ms
+float SPEED = 5000;
 
 class Pointer {
   ArrayList<Point> track;
@@ -10,11 +11,11 @@ class Pointer {
     track = new ArrayList<Point>();
   }
   
-  void change(float ax, float ay, float az, float gx, float gy, float gz) {
-    currentX += az * 3600 / FREQUENCY / frameRate;
-    currentY += -ax * 3600 / FREQUENCY / frameRate;
+  void change(Manipulator m) {
+    currentY += m.getLegSpin() * SPEED / FREQUENCY / frameRate;
+    currentX += m.getLegBringing() * SPEED / FREQUENCY / frameRate;
     
-    currentColor = color(100 + 100 * gz, 100 + 100 * gy, 100 + 100 * gz);
+    currentColor = color(150 + 200 * m.getLegPosition(), 100, 100);
   }
   
   void draw() {
@@ -25,19 +26,13 @@ class Pointer {
       
     track.add(new Point(currentX, currentY, currentColor));
     
-    beginShape();
-    for (int i = 0; i < track.size(); i++) {
-      Point p1 = track.get(i);
+    for (int i = 1; i < track.size(); i++) {
+      Point p1 = track.get(i-1);
+      Point p2 = track.get(i);
       stroke(p1.c, 255.0 * i / track.size());
       strokeWeight(10.0 * i / track.size());
-      //line(p1.x, p1.y, p2.x, p2.y);
-      vertex(p1.x, p1.y);
+      line(p1.x, p1.y, p2.x, p2.y);
     }
-    if (track.size() > 0) {
-      Point p1 = track.get(0);
-      vertex(p1.x, p1.y);
-    }
-    endShape();
   }
   
   void magnite() {
