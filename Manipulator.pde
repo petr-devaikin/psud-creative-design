@@ -26,10 +26,10 @@ class Manipulator {
     gyro[2] = gyro3;
   }
   
-  // 1 - normal leg position
-  // -1 - leg 'to sky'
+  // 0 - normal leg position
+  // 1 - leg 'to sky'
   float getLegPosition() { 
-    return acc[1];
+    return -(acc[1] - 1) / 2;
   }
   
   // movement: raize leg
