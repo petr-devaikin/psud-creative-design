@@ -16,6 +16,16 @@ class Manipulator {
     output.println(acc[0] + " " + acc[1] + " " + acc[2] + " " + gyro[0] + " " + gyro[1] + " " + gyro[2]);
   }
   
+  void update(float acc1, float acc2, float acc3, float gyro1, float gyro2, float gyro3) {
+    acc[0] = acc1;
+    acc[1] = acc2;
+    acc[2] = acc3;
+    
+    gyro[0] = gyro1;
+    gyro[1] = gyro2;
+    gyro[2] = gyro3;
+  }
+  
   // 1 - normal leg position
   // -1 - leg 'to sky'
   float getLegPosition() { 
