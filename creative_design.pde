@@ -27,7 +27,7 @@ void setup(){
   smooth();
   
   //myMovie = new Movie(this, "example.mp4");
-  myMovie = new Movie(this, "capoeira2.mov");
+  myMovie = new Movie(this, "capoeira.mov");
   myMovie.loop();
   myMovie.speed(3);
   myMovie.volume(0);
@@ -93,7 +93,7 @@ void keyReleased(){
 // AND THIS: THIS CODE SLOWLY RETURNS PARAMS TO DEFAULT VALUES
 void magniteScale() {
   float d = noiseScale - noiseScaleDefault;
-  float power = 0.01 * pow(d, 2) / frameRate;
+  float power = 0.001 * pow(d, 2) / frameRate;
   if (power > 0)
     noiseScale -= power * d / abs(d);
 }
