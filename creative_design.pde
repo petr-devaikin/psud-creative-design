@@ -27,7 +27,7 @@ void setup(){
   smooth();
   
   //myMovie = new Movie(this, "example.mp4");
-  myMovie = new Movie(this, "capoeira.mov");
+  myMovie = new Movie(this, "capoeira2.mov");
   myMovie.loop();
   myMovie.speed(3);
   myMovie.volume(0);
