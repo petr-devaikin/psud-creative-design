@@ -1,6 +1,9 @@
+import processing.video.*;
 
 String inputFile = "capoeira.txt"; // leave "" for live input, put filename to play recorded data
 float lastMillis = 0;
+
+Movie myMovie;
 
 float FREQUENCY = 60;
 
@@ -8,17 +11,26 @@ Manipulator manipulator = new Manipulator();
 
 // ------ agents ------
 Agent[] agents = new Agent[10000]; // create more ... to fit max slider agentsCount
-int agentsCount = 4000;
+int agentsCount = 10000;
 float noiseScaleDefault = 300, noiseStrengthDefault = 10;
 float noiseScale, noiseStrength;
-float overlayAlpha = 30, agentsAlpha = 190, strokeWidth = 0.3;
-int background = 255; 
-int drawMode = 1;
+float overlayAlpha = 20, agentsAlpha = 200, strokeWidth = 0.3;
+int drawMode = 2;
+
+float legRaise = 0;
+float legPosition = 0;
 
 
 void setup(){
-  size(1280,800,P2D);
+  size(1069,786,P2D);
+  colorMode(HSB, 255);
   smooth();
+  
+  //myMovie = new Movie(this, "example.mp4");
+  myMovie = new Movie(this, "capoeira.mov");
+  myMovie.loop();
+  myMovie.speed(3);
+  myMovie.volume(0);
   
   noiseScale = noiseScaleDefault;
   noiseStrength = noiseStrengthDefault;
@@ -30,13 +42,20 @@ void setup(){
   setupIO();
 }
 
+void movieEvent(Movie m) {
+  m.read();
+}
+
 
 void draw(){
-  fill(background, background, background, overlayAlpha);
-  noStroke();
-  rect(0,0,width,height);
+  //fill(255, 255, 255);
+  //noStroke();
+  //rect(0,0,width,height);
+  
+  tint(255, overlayAlpha);
+  image(myMovie, 0, 0, width, height);
 
-  stroke(0, agentsAlpha);
+  stroke(100 + 50 * legPosition, 70, 180 + 55 * legRaise, agentsAlpha);
   //draw agents
   if (drawMode == 1) {
     for(int i=0; i<agentsCount; i++) agents[i].update1();
@@ -60,8 +79,9 @@ void draw(){
 void updateSettings() {
   // WE CAN PLAY WITH THIS PARAMS
   noiseScale += manipulator.getLegBringing() * 2000 / FREQUENCY / frameRate;
-  noiseStrength = noiseStrengthDefault + manipulator.getLegPosition() * 1000 / FREQUENCY / frameRate;
-  background = round(255 * (1 - manipulator.getLegPosition()));
+  noiseStrength = noiseStrengthDefault + manipulator.getLegPosition() * 10000 / FREQUENCY / frameRate;
+  legRaise = (1 - manipulator.getLegPosition());
+  legPosition = manipulator.getLegBringing(); 
 }
 
 
