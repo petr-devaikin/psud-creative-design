@@ -27,7 +27,7 @@ void initReader() {
 
 void initListener() {
   udp = new UDP( this, 9222 );
-  //udp.log( true );     // <-- printout the connection activity
+  udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
   output = createWriter("p_"+month()+"_"+day()+"_"+hour()+"_"+minute()+"_"+second()+".txt");
 }
