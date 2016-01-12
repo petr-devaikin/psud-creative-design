@@ -1,6 +1,6 @@
 import processing.video.*;
 
-String inputFile = "capoeira.txt"; // leave "" for live input, put filename to play recorded data
+String inputFile = ""; // leave "" for live input, put filename to play recorded data
 float lastMillis = 0;
 
 Movie myMovie;
@@ -15,21 +15,21 @@ int agentsCount = 10000;
 float noiseScaleDefault = 300, noiseStrengthDefault = 10;
 float noiseScale, noiseStrength;
 float overlayAlpha = 20, agentsAlpha = 200, strokeWidth = 0.3;
-int drawMode = 2;
+int drawMode = 1;
 
 float legRaise = 0;
 float legPosition = 0;
 
 
 void setup(){
-  size(1069,786,P2D);
-  colorMode(HSB, 255);
+  size(1069,686,P2D);
+  //colorMode(HSB, 255);
   smooth();
   
   //myMovie = new Movie(this, "example.mp4");
   myMovie = new Movie(this, "capoeira.mov");
   myMovie.loop();
-  myMovie.speed(3);
+  myMovie.speed(5);
   myMovie.volume(0);
   
   noiseScale = noiseScaleDefault;
@@ -48,12 +48,12 @@ void movieEvent(Movie m) {
 
 
 void draw(){
-  //fill(255, 255, 255);
+  fill(255, 255, 255, overlayAlpha);
   //noStroke();
-  //rect(0,0,width,height);
+  rect(0,0,width,height);
   
-  tint(255, overlayAlpha);
-  image(myMovie, 0, 0, width, height);
+  //tint(255, overlayAlpha);
+  //image(myMovie, 0, 0, width, height);
 
   stroke(100 + 50 * legPosition, 70, 180 + 55 * legRaise, agentsAlpha);
   //draw agents
