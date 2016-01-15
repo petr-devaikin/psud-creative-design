@@ -1,3 +1,5 @@
+// INSTALL SignalFilter LIBRARY BEFORE START!!!
+
 import signal.library.*;
 
 SignalFilter radiusFilter;
