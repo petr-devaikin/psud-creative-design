@@ -28,8 +28,13 @@ class Manipulator {
   
   // 0 - normal leg position
   // 1 - leg 'to sky'
-  float getLegPosition() { 
-    return -(acc[1] - 1) / 2;
+  float getLegPosition() {
+    float v = -(acc[1] - 1) / 2;
+    if (v <= 0.00001)
+      v = 0.00001;
+     else if (v > 1)
+       v = 1;
+    return v;
   }
   
   // movement: raize leg
@@ -47,6 +52,10 @@ class Manipulator {
   
   float getLegSpin() {
     return gyro[1];
+  }
+  
+  float getAuSpin() {
+    return gyro[0];
   }
   
   float get4bytesFloat(byte[] data, int offset) { 
