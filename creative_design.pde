@@ -7,6 +7,9 @@ SignalFilter radiusFilter;
 String inputFile = "capoeira.txt"; // leave "" for live input, put filename to play recorded data
 float lastMillis = 0;
 
+boolean recordVideo = true;
+String framesFolder = "";
+
 float FREQUENCY = 60;
 
 Manipulator manipulator = new Manipulator();
@@ -29,12 +32,16 @@ void setup(){
   colorMode(HSB, 255);
   smooth();
   
+  if (recordVideo)
+    framesFolder = "frames/" + "p_"+day()+"-"+month()+"_"+hour()+"-"+minute()+"-"+second() + "/####.png";
+  
   setupIO();
   clearCanvas();
   
   radiusFilter = new SignalFilter(this);
   radiusFilter.setMinCutoff(2);
   radiusFilter.setFrequency(FREQUENCY);
+  
 }
 
 void clearCanvas() {
@@ -89,6 +96,10 @@ void draw(){
       lastMillis = i;
     }
   }
+  
+  if (recordVideo) {
+    saveFrame(framesFolder);
+  }
 }
 
 void updateSettings() {
@@ -118,9 +129,12 @@ void updateSettings() {
 
 
 void keyReleased(){
-  saveImage();
+  if (inputFile == "")
+    saveImage();
+  
   if (keyCode == BACKSPACE) {
     clearCanvas();
+    saveData();
   }
   else {
     exitIO();
@@ -129,5 +143,5 @@ void keyReleased(){
 }
 
 void saveImage() {
-  saveFrame("p_"+month()+"_"+day()+"_"+hour()+"_"+minute()+"_"+second()+".png");
+  saveFrame("p_"+day()+"-"+month()+"_"+hour()+"-"+minute()+"-"+second()+".png");
 }

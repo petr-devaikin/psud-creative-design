@@ -21,6 +21,14 @@ void exitIO() {
   }
 }
 
+void saveData() {
+  if (inputFile == "") {
+    output.flush(); // Writes the remaining data to the file
+    output.close(); // Finishes the file
+    output = createWriter("p_"+day()+"-"+month()+"_"+hour()+"-"+minute()+"-"+second()+".txt");
+  }
+}
+
 void initReader() {
   reader = createReader(inputFile);
 }
@@ -29,7 +37,7 @@ void initListener() {
   udp = new UDP( this, 9222 );
   //udp.log( true );     // <-- printout the connection activity
   udp.listen( true );
-  output = createWriter("p_"+month()+"_"+day()+"_"+hour()+"_"+minute()+"_"+second()+".txt");
+  output = createWriter("p_"+day()+"-"+month()+"_"+hour()+"-"+minute()+"-"+second()+".txt");
 }
 
 // UDP receiver
@@ -61,8 +69,10 @@ String[] readLine() {
   }
   else {
     println("End of file");
-    initReader();
-    clearCanvas();
+    if (!recordVideo) {
+      initReader();
+      clearCanvas();
+    }
   }
   
   return data;

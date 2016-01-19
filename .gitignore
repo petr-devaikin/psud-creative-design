@@ -1,2 +1,6 @@
 p_*.txt
 p_*.png
+p_*.mp4
+frames/
+
+.DS_Store
