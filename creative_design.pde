@@ -4,13 +4,14 @@ import signal.library.*;
 
 SignalFilter radiusFilter;
 
-String inputFile = "capoeira.txt"; // leave "" for live input, put filename to play recorded data
+String inputFile = "p_20-1_21-55-15.txt"; // leave "" for live input, put filename to play recorded data
 float lastMillis = 0;
 
 boolean recordVideo = true;
 String framesFolder = "";
 
 float FREQUENCY = 60;
+float PLAY_FREQ = 18.8;
 
 Manipulator manipulator = new Manipulator();
 
@@ -28,7 +29,7 @@ float brightness = 255;
 
 
 void setup(){
-  size(600,600,P2D);
+  size(800,800,P2D);
   colorMode(HSB, 255);
   smooth();
   
@@ -91,7 +92,7 @@ void draw(){
   
   if (inputFile != "") {
     int time = millis();
-    for (float i = lastMillis; i < time - lastMillis; i += 1000 / FREQUENCY) {
+    for (float i = lastMillis; i < time - lastMillis; i += 1000 / PLAY_FREQ) { // / FREQUENCY
       readLine();
       lastMillis = i;
     }

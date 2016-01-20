@@ -69,9 +69,12 @@ String[] readLine() {
   }
   else {
     println("End of file");
-    if (!recordVideo) {
+    if (!recordVideo && inputFile == "") {
       initReader();
       clearCanvas();
+    }
+    else if (recordVideo && inputFile != "") {
+      exit();
     }
   }
   
